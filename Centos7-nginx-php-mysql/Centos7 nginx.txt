@@ -1,17 +1,17 @@
-Centos7 Ô´Âë±àÒë°²×°nginx1.7.9
+Centos7 æºç ç¼–è¯‘å®‰è£…nginx1.7.9
 
-´´½¨nginxÓÃ»§ºÍ×é
+åˆ›å»ºnginxç”¨æˆ·å’Œç»„
 groupadd nginx
 useradd -g nginx nginx
 
 
-1.ÏÂÔØnginx1.7  wget http://nginx.org/download/nginx-1.7.9.tar.gz
+1.ä¸‹è½½nginx1.7  wget http://nginx.org/download/nginx-1.7.9.tar.gz
 
-2.½âÑ¹ tar -xvzf nginx-1.7.9.tar.gz
+2.è§£å‹ tar -xvzf nginx-1.7.9.tar.gz
 
-3.½øÈë cd nginx-1.7.9
+3.è¿›å…¥ cd nginx-1.7.9
 
-4.ÔËĞĞ./configure½Å±¾£¬Ö¸¶¨°²×°Ä¿Â¼ 
+4.è¿è¡Œ./configureè„šæœ¬ï¼ŒæŒ‡å®šå®‰è£…ç›®å½• 
 
  ./configure --prefix=/usr/local/nginx\
  --user=nginx\
@@ -35,42 +35,42 @@ useradd -g nginx nginx
 
 6.sudo make install
 
-ÅäÖÃnginxÁÙÊ±±äÁ¿»·¾³£ºexport PATH=$PATH:/usr/local/nginx
+é…ç½®nginxä¸´æ—¶å˜é‡ç¯å¢ƒï¼šexport PATH=$PATH:/usr/local/nginx
 
 
-ÅäÖÃnginxÓÀ¾Ã±äÁ¿»·¾³£º
+é…ç½®nginxæ°¸ä¹…å˜é‡ç¯å¢ƒï¼š
 
-ĞŞ¸Ä /etc  ÏÂµÄ profile ÎÄ¼ş£¬ÔÚÒÑÓĞµÄ$PATH ºóÌí¼Ó /usr/local/nginx 
+ä¿®æ”¹ /etc  ä¸‹çš„ profile æ–‡ä»¶ï¼Œåœ¨å·²æœ‰çš„$PATH åæ·»åŠ  /usr/local/nginx 
 PATH=$PATH:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/root/bin:/usr/local/nginx
 export PATH
-±£´æÖ´ĞĞ  source /etc/profile
+ä¿å­˜æ‰§è¡Œ  source /etc/profile
 
 
 
-²é¿´nginxÊÇ·ñÆô¶¯    ps -A | grep nginx
+æŸ¥çœ‹nginxæ˜¯å¦å¯åŠ¨    ps -A | grep nginx
 
 
-¿ª»ú×ÔÆô¶¯ nginx
+å¼€æœºè‡ªå¯åŠ¨ nginx
 
-ÔÚnginxÄ¿Â¼ÏÂ  chkconfig nginx on
-
-
-Æô¶¯nginx    /usr/local/nginx/nginx
-
-ÖØÆônginx    /usr/local/nginx/nginx -s reload
-
-¹Ø±Õnginx    /usr/local/nginx/nginx -s stop
+åœ¨nginxç›®å½•ä¸‹  chkconfig nginx on
 
 
-1¡¢¹Ø±Õfirewall£º  
-systemctl stop firewalld.service #Í£Ö¹firewall
-systemctl disable firewalld.service #½ûÖ¹firewall¿ª»úÆô¶¯
+å¯åŠ¨nginx    /usr/local/nginx/nginx
+
+é‡å¯nginx    /usr/local/nginx/nginx -s reload
+
+å…³é—­nginx    /usr/local/nginx/nginx -s stop
+
+
+1ã€å…³é—­firewallï¼š  
+systemctl stop firewalld.service #åœæ­¢firewall
+systemctl disable firewalld.service #ç¦æ­¢firewallå¼€æœºå¯åŠ¨
 
 
 
-ÅäÖÃnginxÖ§³Öphp£º
+é…ç½®nginxæ”¯æŒphpï¼š
 
-ĞŞ¸Ä nginx.conf  ÎÄ¼ş
+ä¿®æ”¹ nginx.conf  æ–‡ä»¶
 
 
         location / {
@@ -87,6 +87,5 @@ systemctl disable firewalld.service #½ûÖ¹firewall¿ª»úÆô¶¯
             fastcgi_param  SCRIPT_FILENAME  $document_root$fastcgi_script_name;
             include        fastcgi_params;
         }
-
 
 
