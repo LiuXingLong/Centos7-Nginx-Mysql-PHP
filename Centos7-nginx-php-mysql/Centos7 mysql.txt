@@ -157,7 +157,6 @@ wget https://files.phpmyadmin.net/phpMyAdmin/4.6.0/phpMyAdmin-4.6.0-all-language
 tar -xvzf phpMyAdmin-4.6.0-all-languages.tar.gz
 
 
-
 解决  The configuration file now needs a secret passphrase (blowfish_secret). 报错。
 
 进入 phpMyAdmin 目录中 复制 config.sample.inc.php 或 进入libraries目录复制 config.default.php 到上一个目录， 将复制过来的文件命名为 config.inc.php ,将文件中的 $cfg['blowfish_secret'] 设置密码参数
