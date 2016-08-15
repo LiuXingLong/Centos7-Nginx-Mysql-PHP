@@ -1,0 +1,13 @@
+启动php-fpm  php-fpm start
+关闭php-fpm  php-fpm stop
+重启php-fpm  php-fpm restart
+
+
+启动MySQL  service mysql start 
+关闭MySQL  service mysql stop 
+重启MySQL  service mysql restart
+
+
+启动nginx  nginx
+重启nginx  nginx -s reload
+关闭nginx  nginx -s stop
