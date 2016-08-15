@@ -1,0 +1,166 @@
+CentOS7 下源码安装MySQL 5.6.28    http://ouyangjun.blog.51cto.com/10284323/1734685
+
+创建mysql用户和组:
+groupadd mysql
+useradd -r -g mysql mysql
+id mysql
+
+
+1、通过yum安装依赖的工具
+
+yum -y install make gcc-c++ cmake bison-devel ncurses-devel libaio
+yum install libaio libaio-devel -y
+yum install perl-Data-Dumper -y
+yum install net-tools -y
+
+
+2.下载MySQL5.6源码包：  
+
+wget http://wget dev.mysql.com/get/Downloads/MySQL-5.6/mysql-5.6.28.tar.gz
+
+
+3.解压  tar -xvzf mysql-5.6.28.tar.gz
+
+4.进入  cd mysql-5.6.28
+
+6.编译
+
+cmake\
+ -DCMAKE_INSTALL_PREFIX=/usr/local/mysql\
+ -DMYSQL_DATADIR=/usr/local/mysql/data\
+ -DSYSCONFDIR=/etc\
+ -DWITH_MYISAM_STORAGE_ENGINE=1\
+ -DWITH_INNOBASE_STORAGE_ENGINE=1\
+ -DWITH_MEMORY_STORAGE_ENGINE=1\
+ -DWITH_READLINE=1\
+ -DMYSQL_UNIX_ADDR=/var/lib/mysql/mysql.sock\
+ -DMYSQL_TCP_PORT=3306\
+ -DENABLED_LOCAL_INFILE=1\
+ -DWITH_PARTITION_STORAGE_ENGINE=1\
+ -DEXTRA_CHARSETS=all\
+ -DDEFAULT_CHARSET=utf8\
+ -DDEFAULT_COLLATION=utf8_general_ci
+
+sudo make
+
+sudo make install
+
+7、首先查看是否有mysql账户
+
+less /etc/passwd /etc/group | grep mysql
+
+如果不存在，则创建对应的用户组与用户
+
+groupadd mysql -
+useradd -g mysql mysql s /sbin/nologin
+
+修改权限
+
+chown -R mysql:mysql /usr/local/mysql
+
+没有报错的情况下，到此mysql数据库安装已经完成；以下为配置部分
+
+
+配置mysql临时变量环境： export PATH=$PATH:/usr/local/mysql/bin
+
+
+配置mysql永久变量环境：
+
+修改 /etc  下的 profile 文件，在最后面添加一下内容 
+PATH=$PATH:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/root/bin:/usr/local/mysql/bin
+export PATH
+保存执行  source /etc/profile
+
+
+
+8、配置
+
+cd /usr/local/mysql
+
+进入安装路径 ( mysql )，执行初始化配置脚本，创建系统自带的数据库和表
+
+scripts/mysql_install_db --basedir=/usr/local/mysql --datadir=/usr/local/mysql/data --user=mysql
+
+
+注：在启动MySQL服务时，会按照一定次序搜索my.cnf，先在/etc目录下找，找不到则会搜索"$basedir/my.cnf"，在本例中就是 /usr/local/mysql/my.cnf，这是新版MySQL的配置文件的默认位置！
+
+注意：在CentOS 7版操作系统的最小安装完成后，在/etc目录下会存在一个my.cnf，需要将此文件更名为其他的名字，如：/etc/my.cnf.bak，否则，该文件会干扰源码安装的MySQL的正确配置，造成无法启动。
+
+在使用"yum update"更新系统后，需要检查下/etc目录下是否会多出一个my.cnf，如果多出，将它重命名成别的。否则，MySQL将使用这个配置文件启动，可能造成无法正常启动等问题。
+
+
+
+
+
+启动mysql
+
+添加服务，拷贝服务脚本到init.d目录，并设置开机启动
+
+
+
+(在 mysql 目录下)
+
+cp support-files/mysql.server /etc/init.d/mysql
+
+chkconfig mysql on   ( mysql 开启自启动 )
+
+service mysql start --启动MySQL
+service mysql stop --关闭MySQL
+service mysql restart --重启MySQL
+
+service mysql status --查看状态
+
+systemctl start mysql.service    --启动MySQL 
+systemctl status mysql.service    --查看状态
+
+netstat -lntp | grep 3306 
+
+
+
+
+
+9、配置密码
+
+方法1： 用SET PASSWORD命令
+
+mysql -u root
+mysql> SET PASSWORD FOR 'root'@'localhost' = PASSWORD('newpass');
+
+
+方法2： 用UPDATE直接编辑user表
+
+mysql -u root
+mysql> use mysql;
+mysql> UPDATE user SET Password = PASSWORD('newpass') WHERE user = 'root';
+mysql> FLUSH PRIVILEGES;
+
+
+在丢失root密码的时候，可以这样
+
+mysqld_safe --skip-grant-tables&
+mysql -u root mysql
+mysql> UPDATE user SET password=PASSWORD("new password") WHERE user='root';
+mysql> FLUSH PRIVILEGES;
+
+UPDATE user SET password=PASSWORD("root") WHERE user='root';
+
+mysql -uroot -proot
+show databases;
+use test;
+show tables;
+
+
+安装 phpMyAdmin
+
+wget https://files.phpmyadmin.net/phpMyAdmin/4.6.0/phpMyAdmin-4.6.0-all-languages.tar.gz
+
+tar -xvzf phpMyAdmin-4.6.0-all-languages.tar.gz
+
+
+
+解决  The configuration file now needs a secret passphrase (blowfish_secret). 报错。
+
+进入 phpMyAdmin 目录中 复制 config.sample.inc.php 或 进入libraries目录复制 config.default.php 到上一个目录， 将复制过来的文件命名为 config.inc.php ,将文件中的 $cfg['blowfish_secret'] 设置密码参数
+
+
+
