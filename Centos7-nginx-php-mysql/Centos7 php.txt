@@ -1,0 +1,185 @@
+Centos7 源码编译安装php5.6.5
+
+创建PHP用户和组
+groupadd php-fpm
+useradd -g php-fpm php-fpm
+
+yum安装依赖
+
+安装编译php，nginx，mysql所需的依赖
+
+yum install -y\
+ kenel-devel gcc gcc-c++ patch\
+ perl-Module-Install.noarch libaio pcre-devel\
+ openssl-devel systemd-devel libacl-devel\
+ systemtap-sdt-devel libxml2-devel libcurl-devel\
+ libpng-devel libicu-devel
+
+
+下载
+yum -y install wget
+
+软件源码包存放在：  /usr/local/src
+源码包编译安装在：  /usr/local/软件名字
+
+
+源码编译安装php5.6
+
+1.下载php5.6        wget http://cn2.php.net/distributions/php-5.6.5.tar.gz
+
+2.解压   tar -xvzf php-5.6.5.tar.gz
+
+3.进入  cd php-5.6.5
+
+4.运行./configure脚本，启用需要的扩展模块，并指定php的安装目录 
+
+./configure --prefix=/usr/local/php\
+ --enable-fpm\
+ --with-fpm-user=php-fpm\
+ --with-fpm-group=php-fpm\
+ --with-fpm-systemd\
+ --with-fpm-acl\
+ --enable-mysqlnd\
+ --with-mysql=mysqlnd\
+ --with-mysqli=mysqlnd\
+ --with-pdo-mysql=mysqlnd\
+ --with-config-file-path=/usr/local/php/etc\
+ --enable-opcache\
+ --enable-pcntl\
+ --enable-soap\
+ --enable-sockets\
+ --enable-phpdbg\
+ --enable-dtrace\
+ --enable-calendar\
+ --enable-intl\
+ --enable-mbstring\
+ --enable-gd-native-ttf\
+ --enable-exif\
+ --enable-ftp\
+ --with-openssl\
+ --with-zlib\
+ --with-curl\
+ --with-gd\
+ --with-gettext
+
+5.make
+  
+  还需要 make test
+
+6.sudo make install
+
+
+注意：编译完后  php -v   查看php版本会出现   -bash: php: command not found  找不到php的错误，原因主要是由于环境变量设置问题，
+
+输出环境变量：echo $PATH
+
+看到：/usr/local/bin:/usr/sbin:/usr/bin:/root/bin     （没有php环境变量）
+
+配置php临时环境变量：export PATH=$PATH:/usr/local/php/bin
+
+再次查看环境变脸：echo $PATH
+
+看到：/usr/local/bin:/usr/sbin:/usr/bin:/root/bin:/usr/local/php/bin  （有了php环境变量）
+
+
+配置php永久变量环境：
+
+修改 /etc  下的 profile 文件，在已有的$PATH 后添加 /usr/local/php/bin
+PATH=$PATH:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/root/bin:/usr/local/php/bin
+export PATH
+保存执行  source /etc/profile
+
+
+
+查看PHP版本：php -v
+
+PHP 5.6.5 (cli) (built: Apr 12 2016 09:17:14) 
+Copyright (c) 1997-2014 The PHP Group
+Zend Engine v2.6.0, Copyright (c) 1998-2014 Zend Technologies
+
+
+添加 php.ini 配置文件
+
+将php源码包里的 php.ini-development 配置文件 copy 到 /usr/local/php/etc 目录下， cp php.ini-development ../../php/etc   并修改文件名为 php.ini
+
+
+配置nginx支持php
+
+进入 /usr/local/php/etc    复制 php-fpm.conf.default  并修改文件名为 php-fpm.conf   
+
+cp php-fpm.conf.default php-fpm.conf
+ 
+(进入  php-fpm.conf 将daemonize改成yes)
+
+
+php-fpm已服务的形式启动
+
+在安装目录下执行（php-5.6.5）：  cp ./sapi/fpm/init.d.php-fpm /etc/init.d/php-fpm
+
+
+赋予php-fpm执行权限
+
+chmod a+x /etc/init.d/php-fpm
+
+启动php-fpm  /etc/init.d/php-fpm start  (如果失败可能是未创建  用户和组 )
+
+重启php-fpm  /etc/init.d/php-fpm restart
+
+关闭php-fpm  /etc/init.d/php-fpm stop
+
+netstat -tunlp |grep 9000
+
+
+开机自启动 php-fpm
+
+chkconfig php-fpm on
+
+
+配置php-fpm永久变量环境：
+
+修改 /etc  下的 profile 文件，在已有的$PATH 后添加 /etc/init.d
+PATH=$PATH:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/root/bin:/etc/init.d
+export PATH
+保存执行  source /etc/profile
+
+
+
+PHP链接mysql配置：
+
+php找不到mysql.sock的链接
+
+1.进入mysql  status   查看并记住 unix socket的路径 例如：路径为  /var/lib/mysql/mysql.sock
+
+修改 php.ini 配置文件
+
+mysql.default_socket=/var/lib/mysql/mysql.sock
+
+
+
+php Warning: phpinfo(): It is not safe to rely on the system's timezone settings.解决方法
+
+修改php.ini参数   date.timezone = PRC
+
+重启php-fpm
+
+
+
+
+PDO报错  Error!: SQLSTATE[HY000] [2002] No such file or directory （找不到路径，未配置sock）
+
+修改 php.ini 配置文件
+pdo_mysql.default_socket=/var/lib/mysql/mysql.sock
+
+
+
+mysqli配置sock
+
+修改 php.ini 配置文件
+mysqli.default_socket = /var/lib/mysql/mysql.sock
+
+
+
+安装PHP解释器：yum install php-cli
+
+
+

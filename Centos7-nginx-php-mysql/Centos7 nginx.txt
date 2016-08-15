@@ -1,0 +1,92 @@
+Centos7 源码编译安装nginx1.7.9
+
+创建nginx用户和组
+groupadd nginx
+useradd -g nginx nginx
+
+
+1.下载nginx1.7  wget http://nginx.org/download/nginx-1.7.9.tar.gz
+
+2.解压 tar -xvzf nginx-1.7.9.tar.gz
+
+3.进入 cd nginx-1.7.9
+
+4.运行./configure脚本，指定安装目录 
+
+ ./configure --prefix=/usr/local/nginx\
+ --user=nginx\
+ --group=nginx\
+ --sbin-path=/usr/local/nginx\
+ --conf-path=/usr/local/nginx/nginx.conf\
+ --pid-path=/usr/local/nginx/nginx.pid\
+ --with-http_ssl_module\
+ --with-http_spdy_module\
+ --with-http_realip_module\
+ --with-http_gzip_static_module\
+ --with-http_auth_request_module\
+ --with-http_stub_status_module
+
+
+
+ --with-threads\
+
+ 
+5.make
+
+6.sudo make install
+
+配置nginx临时变量环境：export PATH=$PATH:/usr/local/nginx
+
+
+配置nginx永久变量环境：
+
+修改 /etc  下的 profile 文件，在已有的$PATH 后添加 /usr/local/nginx 
+PATH=$PATH:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/root/bin:/usr/local/nginx
+export PATH
+保存执行  source /etc/profile
+
+
+
+查看nginx是否启动    ps -A | grep nginx
+
+
+开机自启动 nginx
+
+在nginx目录下  chkconfig nginx on
+
+
+启动nginx    /usr/local/nginx/nginx
+
+重启nginx    /usr/local/nginx/nginx -s reload
+
+关闭nginx    /usr/local/nginx/nginx -s stop
+
+
+1、关闭firewall：  
+systemctl stop firewalld.service #停止firewall
+systemctl disable firewalld.service #禁止firewall开机启动
+
+
+
+配置nginx支持php：
+
+修改 nginx.conf  文件
+
+
+        location / {
+            root   html;
+            index  index.php index.html index.htm;
+        }
+
+
+
+	location ~ \.php$ {
+        #   root           html;
+            fastcgi_pass   127.0.0.1:9000;
+        #   fastcgi_index  index.php;
+            fastcgi_param  SCRIPT_FILENAME  $document_root$fastcgi_script_name;
+            include        fastcgi_params;
+        }
+
+
+
