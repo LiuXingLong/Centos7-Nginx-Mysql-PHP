@@ -1,12 +1,12 @@
-Centos7 Ô´Âë±àÒë°²×°php5.6.5
+Centos7 æºç ç¼–è¯‘å®‰è£…php5.6.5
 
-´´½¨PHPÓÃ»§ºÍ×é
+åˆ›å»ºPHPç”¨æˆ·å’Œç»„
 groupadd php-fpm
 useradd -g php-fpm php-fpm
 
-yum°²×°ÒÀÀµ
+yumå®‰è£…ä¾èµ–
 
-°²×°±àÒëphp£¬nginx£¬mysqlËùĞèµÄÒÀÀµ
+å®‰è£…ç¼–è¯‘phpï¼Œnginxï¼Œmysqlæ‰€éœ€çš„ä¾èµ–
 
 yum install -y\
  kenel-devel gcc gcc-c++ patch\
@@ -16,22 +16,22 @@ yum install -y\
  libpng-devel libicu-devel
 
 
-ÏÂÔØ
+ä¸‹è½½
 yum -y install wget
 
-Èí¼şÔ´Âë°ü´æ·ÅÔÚ£º  /usr/local/src
-Ô´Âë°ü±àÒë°²×°ÔÚ£º  /usr/local/Èí¼şÃû×Ö
+è½¯ä»¶æºç åŒ…å­˜æ”¾åœ¨ï¼š  /usr/local/src
+æºç åŒ…ç¼–è¯‘å®‰è£…åœ¨ï¼š  /usr/local/è½¯ä»¶åå­—
 
 
-Ô´Âë±àÒë°²×°php5.6
+æºç ç¼–è¯‘å®‰è£…php5.6
 
-1.ÏÂÔØphp5.6        wget http://cn2.php.net/distributions/php-5.6.5.tar.gz
+1.ä¸‹è½½php5.6        wget http://cn2.php.net/distributions/php-5.6.5.tar.gz
 
-2.½âÑ¹   tar -xvzf php-5.6.5.tar.gz
+2.è§£å‹   tar -xvzf php-5.6.5.tar.gz
 
-3.½øÈë  cd php-5.6.5
+3.è¿›å…¥  cd php-5.6.5
 
-4.ÔËĞĞ./configure½Å±¾£¬ÆôÓÃĞèÒªµÄÀ©Õ¹Ä£¿é£¬²¢Ö¸¶¨phpµÄ°²×°Ä¿Â¼ 
+4.è¿è¡Œ./configureè„šæœ¬ï¼Œå¯ç”¨éœ€è¦çš„æ‰©å±•æ¨¡å—ï¼Œå¹¶æŒ‡å®šphpçš„å®‰è£…ç›®å½• 
 
 ./configure --prefix=/usr/local/php\
  --enable-fpm\
@@ -64,122 +64,121 @@ yum -y install wget
 
 5.make
   
-  »¹ĞèÒª make test
+  è¿˜éœ€è¦ make test
 
 6.sudo make install
 
 
-×¢Òâ£º±àÒëÍêºó  php -v   ²é¿´php°æ±¾»á³öÏÖ   -bash: php: command not found  ÕÒ²»µ½phpµÄ´íÎó£¬Ô­ÒòÖ÷ÒªÊÇÓÉÓÚ»·¾³±äÁ¿ÉèÖÃÎÊÌâ£¬
+æ³¨æ„ï¼šç¼–è¯‘å®Œå  php -v   æŸ¥çœ‹phpç‰ˆæœ¬ä¼šå‡ºç°   -bash: php: command not found  æ‰¾ä¸åˆ°phpçš„é”™è¯¯ï¼ŒåŸå› ä¸»è¦æ˜¯ç”±äºç¯å¢ƒå˜é‡è®¾ç½®é—®é¢˜ï¼Œ
 
-Êä³ö»·¾³±äÁ¿£ºecho $PATH
+è¾“å‡ºç¯å¢ƒå˜é‡ï¼šecho $PATH
 
-¿´µ½£º/usr/local/bin:/usr/sbin:/usr/bin:/root/bin     £¨Ã»ÓĞphp»·¾³±äÁ¿£©
+çœ‹åˆ°ï¼š/usr/local/bin:/usr/sbin:/usr/bin:/root/bin     ï¼ˆæ²¡æœ‰phpç¯å¢ƒå˜é‡ï¼‰
 
-ÅäÖÃphpÁÙÊ±»·¾³±äÁ¿£ºexport PATH=$PATH:/usr/local/php/bin
+é…ç½®phpä¸´æ—¶ç¯å¢ƒå˜é‡ï¼šexport PATH=$PATH:/usr/local/php/bin
 
-ÔÙ´Î²é¿´»·¾³±äÁ³£ºecho $PATH
+å†æ¬¡æŸ¥çœ‹ç¯å¢ƒå˜è„¸ï¼šecho $PATH
 
-¿´µ½£º/usr/local/bin:/usr/sbin:/usr/bin:/root/bin:/usr/local/php/bin  £¨ÓĞÁËphp»·¾³±äÁ¿£©
+çœ‹åˆ°ï¼š/usr/local/bin:/usr/sbin:/usr/bin:/root/bin:/usr/local/php/bin  ï¼ˆæœ‰äº†phpç¯å¢ƒå˜é‡ï¼‰
 
 
-ÅäÖÃphpÓÀ¾Ã±äÁ¿»·¾³£º
+é…ç½®phpæ°¸ä¹…å˜é‡ç¯å¢ƒï¼š
 
-ĞŞ¸Ä /etc  ÏÂµÄ profile ÎÄ¼ş£¬ÔÚÒÑÓĞµÄ$PATH ºóÌí¼Ó /usr/local/php/bin
+ä¿®æ”¹ /etc  ä¸‹çš„ profile æ–‡ä»¶ï¼Œåœ¨å·²æœ‰çš„$PATH åæ·»åŠ  /usr/local/php/bin
 PATH=$PATH:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/root/bin:/usr/local/php/bin
 export PATH
-±£´æÖ´ĞĞ  source /etc/profile
+ä¿å­˜æ‰§è¡Œ  source /etc/profile
 
 
 
-²é¿´PHP°æ±¾£ºphp -v
+æŸ¥çœ‹PHPç‰ˆæœ¬ï¼šphp -v
 
 PHP 5.6.5 (cli) (built: Apr 12 2016 09:17:14) 
 Copyright (c) 1997-2014 The PHP Group
 Zend Engine v2.6.0, Copyright (c) 1998-2014 Zend Technologies
 
 
-Ìí¼Ó php.ini ÅäÖÃÎÄ¼ş
+æ·»åŠ  php.ini é…ç½®æ–‡ä»¶
 
-½«phpÔ´Âë°üÀïµÄ php.ini-development ÅäÖÃÎÄ¼ş copy µ½ /usr/local/php/etc Ä¿Â¼ÏÂ£¬ cp php.ini-development ../../php/etc   ²¢ĞŞ¸ÄÎÄ¼şÃûÎª php.ini
+å°†phpæºç åŒ…é‡Œçš„ php.ini-development é…ç½®æ–‡ä»¶ copy åˆ° /usr/local/php/etc ç›®å½•ä¸‹ï¼Œ cp php.ini-development ../../php/etc   å¹¶ä¿®æ”¹æ–‡ä»¶åä¸º php.ini
 
 
-ÅäÖÃnginxÖ§³Öphp
+é…ç½®nginxæ”¯æŒphp
 
-½øÈë /usr/local/php/etc    ¸´ÖÆ php-fpm.conf.default  ²¢ĞŞ¸ÄÎÄ¼şÃûÎª php-fpm.conf   
+è¿›å…¥ /usr/local/php/etc    å¤åˆ¶ php-fpm.conf.default  å¹¶ä¿®æ”¹æ–‡ä»¶åä¸º php-fpm.conf   
 
 cp php-fpm.conf.default php-fpm.conf
  
-(½øÈë  php-fpm.conf ½«daemonize¸Ä³Éyes)
+(è¿›å…¥  php-fpm.conf å°†daemonizeæ”¹æˆyes)
 
 
-php-fpmÒÑ·şÎñµÄĞÎÊ½Æô¶¯
+php-fpmå·²æœåŠ¡çš„å½¢å¼å¯åŠ¨
 
-ÔÚ°²×°Ä¿Â¼ÏÂÖ´ĞĞ£¨php-5.6.5£©£º  cp ./sapi/fpm/init.d.php-fpm /etc/init.d/php-fpm
+åœ¨å®‰è£…ç›®å½•ä¸‹æ‰§è¡Œï¼ˆphp-5.6.5ï¼‰ï¼š  cp ./sapi/fpm/init.d.php-fpm /etc/init.d/php-fpm
 
 
-¸³Óèphp-fpmÖ´ĞĞÈ¨ÏŞ
+èµ‹äºˆphp-fpmæ‰§è¡Œæƒé™
 
 chmod a+x /etc/init.d/php-fpm
 
-Æô¶¯php-fpm  /etc/init.d/php-fpm start  (Èç¹ûÊ§°Ü¿ÉÄÜÊÇÎ´´´½¨  ÓÃ»§ºÍ×é )
+å¯åŠ¨php-fpm  /etc/init.d/php-fpm start  (å¦‚æœå¤±è´¥å¯èƒ½æ˜¯æœªåˆ›å»º  ç”¨æˆ·å’Œç»„ )
 
-ÖØÆôphp-fpm  /etc/init.d/php-fpm restart
+é‡å¯php-fpm  /etc/init.d/php-fpm restart
 
-¹Ø±Õphp-fpm  /etc/init.d/php-fpm stop
+å…³é—­php-fpm  /etc/init.d/php-fpm stop
 
 netstat -tunlp |grep 9000
 
 
-¿ª»ú×ÔÆô¶¯ php-fpm
+å¼€æœºè‡ªå¯åŠ¨ php-fpm
 
 chkconfig php-fpm on
 
 
-ÅäÖÃphp-fpmÓÀ¾Ã±äÁ¿»·¾³£º
+é…ç½®php-fpmæ°¸ä¹…å˜é‡ç¯å¢ƒï¼š
 
-ĞŞ¸Ä /etc  ÏÂµÄ profile ÎÄ¼ş£¬ÔÚÒÑÓĞµÄ$PATH ºóÌí¼Ó /etc/init.d
+ä¿®æ”¹ /etc  ä¸‹çš„ profile æ–‡ä»¶ï¼Œåœ¨å·²æœ‰çš„$PATH åæ·»åŠ  /etc/init.d
 PATH=$PATH:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/root/bin:/etc/init.d
 export PATH
-±£´æÖ´ĞĞ  source /etc/profile
+ä¿å­˜æ‰§è¡Œ  source /etc/profile
 
 
 
-PHPÁ´½ÓmysqlÅäÖÃ£º
+PHPé“¾æ¥mysqlé…ç½®ï¼š
 
-phpÕÒ²»µ½mysql.sockµÄÁ´½Ó
+phpæ‰¾ä¸åˆ°mysql.sockçš„é“¾æ¥
 
-1.½øÈëmysql  status   ²é¿´²¢¼Ç×¡ unix socketµÄÂ·¾¶ ÀıÈç£ºÂ·¾¶Îª  /var/lib/mysql/mysql.sock
+1.è¿›å…¥mysql  status   æŸ¥çœ‹å¹¶è®°ä½ unix socketçš„è·¯å¾„ ä¾‹å¦‚ï¼šè·¯å¾„ä¸º  /var/lib/mysql/mysql.sock
 
-ĞŞ¸Ä php.ini ÅäÖÃÎÄ¼ş
+ä¿®æ”¹ php.ini é…ç½®æ–‡ä»¶
 
 mysql.default_socket=/var/lib/mysql/mysql.sock
 
 
 
-php Warning: phpinfo(): It is not safe to rely on the system's timezone settings.½â¾ö·½·¨
+php Warning: phpinfo(): It is not safe to rely on the system's timezone settings.è§£å†³æ–¹æ³•
 
-ĞŞ¸Äphp.ini²ÎÊı   date.timezone = PRC
+ä¿®æ”¹php.iniå‚æ•°   date.timezone = PRC
 
-ÖØÆôphp-fpm
-
-
+é‡å¯php-fpm
 
 
-PDO±¨´í  Error!: SQLSTATE[HY000] [2002] No such file or directory £¨ÕÒ²»µ½Â·¾¶£¬Î´ÅäÖÃsock£©
 
-ĞŞ¸Ä php.ini ÅäÖÃÎÄ¼ş
+
+PDOæŠ¥é”™  Error!: SQLSTATE[HY000] [2002] No such file or directory ï¼ˆæ‰¾ä¸åˆ°è·¯å¾„ï¼Œæœªé…ç½®sockï¼‰
+
+ä¿®æ”¹ php.ini é…ç½®æ–‡ä»¶
 pdo_mysql.default_socket=/var/lib/mysql/mysql.sock
 
 
 
-mysqliÅäÖÃsock
+mysqlié…ç½®sock
 
-ĞŞ¸Ä php.ini ÅäÖÃÎÄ¼ş
+ä¿®æ”¹ php.ini é…ç½®æ–‡ä»¶
 mysqli.default_socket = /var/lib/mysql/mysql.sock
 
 
 
-°²×°PHP½âÊÍÆ÷£ºyum install php-cli
-
+å®‰è£…PHPè§£é‡Šå™¨ï¼šyum install php-cli
 
 
