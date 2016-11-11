@@ -48,3 +48,6 @@ server {
 }
 
 通过域名前缀代理到  反向代理服务器，反向代理服务器   配置  server_name 同样的名称，指定 root 目录
+
+根据位置返回经纬度
+http://restapi.amap.com/v3/place/text?s=rsv3&key=169d2dd7829fe45690fabec812d05bc3&appname=http://www.gpsspg.com/iframe/maps/amap_160703.htm?&csid=85CC0932-FD90-4A41-82F6-36E5839D36D4&keywords=岳阳市 
