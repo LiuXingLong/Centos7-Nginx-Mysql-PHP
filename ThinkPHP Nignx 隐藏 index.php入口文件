@@ -1,0 +1,50 @@
+server {
+        listen       80;
+        server_name  xlocal.com phpStudy.net;
+        root   "D:/WWW/shangchengv3/public";
+        index  index.html index.htm index.php;
+        #隐藏index.php
+        location / {
+              if (!-e $request_filename) {
+                       #一级目录
+                       rewrite ^/(.*)$ /index.php/$1 last;
+                       #二级目录
+                       #rewrite ^/MYAPP/(.*)$ /MYAPP/index.php/$1 last;
+                 }  
+        }
+        #pathinfo设置
+        location ~ \.php($|/) {
+            fastcgi_pass   127.0.0.1:9000;
+            fastcgi_index  index.php;
+            fastcgi_split_path_info ^(.+\.php)(.*)$;
+            fastcgi_param   PATH_INFO $fastcgi_path_info;
+            fastcgi_param  SCRIPT_FILENAME   $document_root$fastcgi_script_name;
+            include        fastcgi_params;
+        }
+}
+server {
+        listen       80;
+        server_name  hkcyl.wicp.net phpStudy.net;       
+        index  index.html index.htm index.php;
+        root   "D:/WWW/shangchengv3/public";
+        #隐藏index.php
+        location / {             
+              if (!-e $request_filename) {
+                       #一级目录
+                       rewrite ^/(.*)$ /index.php/$1 last;
+                       #二级目录
+                       #rewrite ^/MYAPP/(.*)$ /MYAPP/index.php/$1 last;
+               }  
+        }
+        #pathinfo设置
+        location ~ \.php($|/) {
+            fastcgi_pass   127.0.0.1:9000;
+            fastcgi_index  index.php;
+            fastcgi_split_path_info ^(.+\.php)(.*)$;
+            fastcgi_param   PATH_INFO $fastcgi_path_info;
+            fastcgi_param  SCRIPT_FILENAME   $document_root$fastcgi_script_name;
+            include        fastcgi_params;
+        }
+}
+
+通过域名前缀代理到  反向代理服务器，反向代理服务器   配置  server_name 同样的名称，指定 root 目录
